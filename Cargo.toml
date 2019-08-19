@@ -1,10 +1,14 @@
 [package]
 name = "sbitty"
-version = "0.1.0"
-authors = ["Robin Biscay <biscay.rob@gmail.com>"]
+version = "0.5.0"
+authors = ["Robin Biscay <biscay.rob@gmail.com"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "library defining bitwise operations on standard integers type"
+license = "MIT"
+#readme = "README.md"
+homepage = "https://github.com/BiscayRobin/sbitty"
+repository = "https://github.com/BiscayRobin/sbitty"
+keywords = ["library","bitwise operations","integers"]
 
 [dependencies]
 num-traits = "0.2"
