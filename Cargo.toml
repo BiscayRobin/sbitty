@@ -8,7 +8,7 @@ license = "MIT"
 #readme = "README.md"
 homepage = "https://github.com/BiscayRobin/sbitty"
 repository = "https://github.com/BiscayRobin/sbitty"
-keywords = ["library","bitwise operations","integers"]
+keywords = ["library","bitwise","operations","integers"]
 
 [dependencies]
 num-traits = "0.2"
