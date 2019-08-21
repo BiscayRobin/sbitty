@@ -55,4 +55,34 @@ mod test {
 		assert_eq!(1usize.get_bit(0), Some(true));
 		assert_eq!(0usize.get_bit(size_of::<usize>() * 8), None);
 	}
+	#[test]
+	fn get_bit_i8() {
+		assert_eq!(0i8.get_bit(0), Some(false));
+		assert_eq!(1i8.get_bit(0), Some(true));
+		assert_eq!(0i8.get_bit(size_of::<i8>() * 8), None);
+	}
+	#[test]
+	fn get_bit_i16() {
+		assert_eq!(0i16.get_bit(0), Some(false));
+		assert_eq!(1i16.get_bit(0), Some(true));
+		assert_eq!(0i16.get_bit(size_of::<i16>() * 8), None);
+	}
+	#[test]
+	fn get_bit_i32() {
+		assert_eq!(0i32.get_bit(0), Some(false));
+		assert_eq!(1i32.get_bit(0), Some(true));
+		assert_eq!(0i32.get_bit(size_of::<i32>() * 8), None);
+	}
+	#[test]
+	fn get_bit_i64() {
+		assert_eq!(0i64.get_bit(0), Some(false));
+		assert_eq!(1i64.get_bit(0), Some(true));
+		assert_eq!(0i64.get_bit(size_of::<i64>() * 8), None);
+	}
+	#[test]
+	fn get_bit_isize() {
+		assert_eq!(0isize.get_bit(0), Some(false));
+		assert_eq!(1isize.get_bit(0), Some(true));
+		assert_eq!(0isize.get_bit(size_of::<isize>() * 8), None);
+	}
 }
