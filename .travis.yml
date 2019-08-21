@@ -11,3 +11,6 @@ cache: cargo
 script:
   - cargo check --verbose
   - cargo test --verbose
+
+notifications:
+  email: false
