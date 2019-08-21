@@ -2,17 +2,10 @@ language: rust
 
 rust: 
   - stable
-  - nightly
-  - beta
 
 before_cache: rm -rf "$TRAVIS_HOME/.cargo/registry/src"
 cache: cargo
 
-<<<<<<< HEAD
-script:
-  - cargo check --verbose
-  - cargo test --verbose
-=======
 jobs:
   include:
     - stages: test
@@ -24,8 +17,6 @@ jobs:
     - stages: publish
       script: cargo publish --token $CARGO_TOKEN
       if: commit_message =~ /^#release*/ 
-
->>>>>>> 31e9036... working with control on commit message
 
 notifications:
   email: false
