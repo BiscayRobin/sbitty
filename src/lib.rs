@@ -32,6 +32,22 @@ pub trait SetBit {
 		Self: Sized;
 }
 
+macro_rules! set_bit_impl {
+	($($t:ty)*) => ($(
+		impl SetBit for $t {
+			fn set_bit(&self, idx: usize) -> Result<Self, IndexError> where Self: Sized {
+				if idx >= (size_of::<Self>() * 8) {
+					Err(IndexError::UNDERSIZED)
+				} else {
+					Ok(*self | (1 << idx))
+				}
+			}
+		}
+	)*)
+}
+
+set_bit_impl! {u8}
+
 pub trait UnsetBit {
 	fn unset_bit(&self, idx: usize) -> Result<Self, IndexError>
 	where
@@ -45,7 +61,7 @@ pub trait ToggleBit {
 }
 #[cfg(test)]
 mod test {
-	use super::{size_of, GetBit};
+	use super::*;
 	#[test]
 	fn get_bit_u8() {
 		assert_eq!(0u8.get_bit(0), Some(false));
@@ -105,5 +121,12 @@ mod test {
 		assert_eq!(0isize.get_bit(0), Some(false));
 		assert_eq!(1isize.get_bit(0), Some(true));
 		assert_eq!(0isize.get_bit(size_of::<isize>() * 8), None);
+	}
+
+	#[test]
+	fn set_bit_u8() {
+		assert_eq!(1u8.set_bit(0).ok(), Some(1));
+		assert_eq!(0u8.set_bit(0).ok(), Some(1));
+		assert!(0u8.set_bit(size_of::<u8>() * 8).is_err());
 	}
 }
