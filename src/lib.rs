@@ -1,5 +1,9 @@
 use std::mem::size_of;
 
+pub enum IndexError {
+	UNDERSIZED,
+}
+
 pub trait GetBit {
 	fn get_bit(&self, idx: usize) -> Option<bool>;
 }
@@ -22,6 +26,23 @@ macro_rules! get_bit_impl {
 
 get_bit_impl! {u8 u16 u32 u64 usize i8 i16 i32 i64 isize}
 
+pub trait SetBit {
+	fn set_bit(&self, idx: usize) -> Result<Self, IndexError>
+	where
+		Self: Sized;
+}
+
+pub trait UnsetBit {
+	fn unset_bit(&self, idx: usize) -> Result<Self, IndexError>
+	where
+		Self: Sized;
+}
+
+pub trait ToggleBit {
+	fn toggle_bit(&self, idx: usize) -> Result<Self, IndexError>
+	where
+		Self: Sized;
+}
 #[cfg(test)]
 mod test {
 	use super::{size_of, GetBit};
