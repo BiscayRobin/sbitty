@@ -1,6 +1,10 @@
 [package]
 name = "sbitty"
+<<<<<<< HEAD
 version = "0.5.1"
+=======
+version = "0.5.3"
+>>>>>>> 66d414d... #release let's do the first automated release
 authors = ["Robin Biscay <biscay.rob@gmail.com"]
 edition = "2018"
 description = "library defining bitwise operations on standard integers type"
