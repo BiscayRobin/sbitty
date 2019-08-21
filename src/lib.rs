@@ -46,7 +46,7 @@ macro_rules! set_bit_impl {
 	)*)
 }
 
-set_bit_impl! {u8}
+set_bit_impl! {u8 u16 u32 u64 usize}
 
 pub trait UnsetBit {
 	fn unset_bit(&self, idx: usize) -> Result<Self, IndexError>
@@ -128,5 +128,29 @@ mod test {
 		assert_eq!(1u8.set_bit(0).ok(), Some(1));
 		assert_eq!(0u8.set_bit(0).ok(), Some(1));
 		assert!(0u8.set_bit(size_of::<u8>() * 8).is_err());
+	}
+	#[test]
+	fn set_bit_u16() {
+		assert_eq!(1u16.set_bit(0).ok(), Some(1));
+		assert_eq!(0u16.set_bit(0).ok(), Some(1));
+		assert!(0u16.set_bit(size_of::<u16>() * 8).is_err());
+	}
+	#[test]
+	fn set_bit_u32() {
+		assert_eq!(1u32.set_bit(0).ok(), Some(1));
+		assert_eq!(0u32.set_bit(0).ok(), Some(1));
+		assert!(0u32.set_bit(size_of::<u32>() * 8).is_err());
+	}
+	#[test]
+	fn set_bit_u64() {
+		assert_eq!(1u64.set_bit(0).ok(), Some(1));
+		assert_eq!(0u64.set_bit(0).ok(), Some(1));
+		assert!(0u64.set_bit(size_of::<u64>() * 8).is_err());
+	}
+	#[test]
+	fn set_bit_usize() {
+		assert_eq!(1usize.set_bit(0).ok(), Some(1));
+		assert_eq!(0usize.set_bit(0).ok(), Some(1));
+		assert!(0usize.set_bit(size_of::<usize>() * 8).is_err());
 	}
 }
