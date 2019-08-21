@@ -21,3 +21,38 @@ macro_rules! get_bit_impl {
 }
 
 get_bit_impl! {u8 u16 u32 u64 usize i8 i16 i32 i64 isize}
+
+#[cfg(test)]
+mod test {
+	use super::{size_of, GetBit};
+	#[test]
+	fn get_bit_u8() {
+		assert_eq!(0u8.get_bit(0), Some(false));
+		assert_eq!(1u8.get_bit(0), Some(true));
+		assert_eq!(0u8.get_bit(size_of::<u8>() * 8), None);
+	}
+	#[test]
+	fn get_bit_u16() {
+		assert_eq!(0u16.get_bit(0), Some(false));
+		assert_eq!(1u16.get_bit(0), Some(true));
+		assert_eq!(0u16.get_bit(size_of::<u16>() * 8), None);
+	}
+	#[test]
+	fn get_bit_u32() {
+		assert_eq!(0u32.get_bit(0), Some(false));
+		assert_eq!(1u32.get_bit(0), Some(true));
+		assert_eq!(0u32.get_bit(size_of::<u32>() * 8), None);
+	}
+	#[test]
+	fn get_bit_u64() {
+		assert_eq!(0u64.get_bit(0), Some(false));
+		assert_eq!(1u64.get_bit(0), Some(true));
+		assert_eq!(0u64.get_bit(size_of::<u64>() * 8), None);
+	}
+	#[test]
+	fn get_bit_usize() {
+		assert_eq!(0usize.get_bit(0), Some(false));
+		assert_eq!(1usize.get_bit(0), Some(true));
+		assert_eq!(0usize.get_bit(size_of::<usize>() * 8), None);
+	}
+}

@@ -11,4 +11,3 @@ repository = "https://github.com/BiscayRobin/sbitty"
 keywords = ["library","bitwise","operations","integers"]
 
 [dependencies]
-num-traits = "0.2"
