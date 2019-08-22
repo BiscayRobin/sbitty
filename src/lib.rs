@@ -1,9 +1,33 @@
-use std::mem::size_of;
+//! Standard integers does not have any standard implementation of bitwise
+//! manipulation. This crate is made to fill this gap and hide ugly bitwise
+//! operation which are error prone behind some runtime safe functions.
+//!
+//! It is made so you only have to call functions to use it properly.
+//! This crate use indexes as you would in vectors or Arrays. If any
+//! index error happend in your program you will get `Option<T>` or
+//! `Result<_,_>` returned to properly handle this in a production ready
+//! manner.
+#![no_std]
+use core::mem::size_of;
 
+/// The IndexError enum is used for error handling
+/// This should not be seen as an API user
 pub enum IndexError {
+	/// Thrown when an you wan't to acces too far in memory
 	UNDERSIZED,
 }
 
+/// performing _ & (1 << idx) with n the index
+///
+/// # Examples
+///
+/// ## Getting bits in an u8
+///
+/// ```
+/// assert.eq!(0b1000_0000u8.get_bit( 7 ) , Some(true));
+/// assert.eq!(0b1111_1110u8.get_bit( 0 ) , Some(false));
+/// assert.eq!(0b0000_0000u8.get_bit( 8 ) , None);
+/// ```
 pub trait GetBit {
 	fn get_bit(&self, idx: usize) -> Option<bool>;
 }
