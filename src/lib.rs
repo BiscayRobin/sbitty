@@ -355,6 +355,36 @@ mod test {
 	fn toggle_bit_usize() {
 		assert_eq!(0b01usize.toggle_bit(1).ok(), Some(0b11));
 		assert_eq!(0b01usize.toggle_bit(0).ok(), Some(0b00));
-		assert!(0usize.toggle_bit(size_of::<u16>() * 8).is_err());
+		assert!(0usize.toggle_bit(size_of::<usize>() * 8).is_err());
+	}
+	#[test]
+	fn toggle_bit_i8() {
+		assert_eq!(0b01i8.toggle_bit(1).ok(), Some(0b11));
+		assert_eq!(0b01i8.toggle_bit(0).ok(), Some(0b00));
+		assert!(0i8.toggle_bit(size_of::<i8>() * 8).is_err());
+	}
+	#[test]
+	fn toggle_bit_i16() {
+		assert_eq!(0b01i16.toggle_bit(1).ok(), Some(0b11));
+		assert_eq!(0b01i16.toggle_bit(0).ok(), Some(0b00));
+		assert!(0i16.toggle_bit(size_of::<i16>() * 8).is_err());
+	}
+	#[test]
+	fn toggle_bit_i32() {
+		assert_eq!(0b01i32.toggle_bit(1).ok(), Some(0b11));
+		assert_eq!(0b01i32.toggle_bit(0).ok(), Some(0b00));
+		assert!(0i32.toggle_bit(size_of::<i32>() * 8).is_err());
+	}
+	#[test]
+	fn toggle_bit_i64() {
+		assert_eq!(0b01i64.toggle_bit(1).ok(), Some(0b11));
+		assert_eq!(0b01i64.toggle_bit(0).ok(), Some(0b00));
+		assert!(0i64.toggle_bit(size_of::<i64>() * 8).is_err());
+	}
+	#[test]
+	fn toggle_bit_isize() {
+		assert_eq!(0b01isize.toggle_bit(1).ok(), Some(0b11));
+		assert_eq!(0b01isize.toggle_bit(0).ok(), Some(0b00));
+		assert!(0isize.toggle_bit(size_of::<isize>() * 8).is_err());
 	}
 }
