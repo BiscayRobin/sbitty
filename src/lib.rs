@@ -21,12 +21,39 @@ pub enum IndexError {
 ///
 /// # Examples
 ///
-/// ## Getting bits in an u8
+/// ## get bit for big int
+///
+/// Don't pay attention to my bigint implementation.
 ///
 /// ```
-/// assert_eq!(0b1000_0000u8.get_bit( 7 ) , Some(true));
-/// assert_eq!(0b1111_1110u8.get_bit( 0 ) , Some(false));
-/// assert_eq!(0b0000_0000u8.get_bit( 8 ) , None);
+/// pub struct BigInt {
+/// 	hwb: i64,
+/// 	lwb: i64,
+/// }
+/// # pub trait GetBit {
+/// # 	fn get_bit(&self, idx: usize) -> Option<bool>;
+/// # }
+/// impl GetBit for BigInt {
+/// 	fn get_bit(&self, idx: usize) -> Option<bool> {
+/// 		if idx >= 128 {
+/// 			None
+/// 		} else if idx >= 64 {
+/// 			if self.hwb & (1 << (idx - 64)) != 0 {
+/// 				Some(true)
+/// 			}
+/// 			else {
+/// 				Some(false)
+/// 			}
+/// 		} else {
+/// 			if self.lwb & (1 << (idx - 64)) != 0 {
+/// 				Some(true)
+/// 			}
+/// 			else {
+/// 				Some(false)
+/// 			}
+/// 		}
+/// 	}
+/// }
 /// ```
 pub trait GetBit {
 	fn get_bit(&self, idx: usize) -> Option<bool>;
