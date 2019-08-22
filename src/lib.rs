@@ -24,9 +24,9 @@ pub enum IndexError {
 /// ## Getting bits in an u8
 ///
 /// ```
-/// assert.eq!(0b1000_0000u8.get_bit( 7 ) , Some(true));
-/// assert.eq!(0b1111_1110u8.get_bit( 0 ) , Some(false));
-/// assert.eq!(0b0000_0000u8.get_bit( 8 ) , None);
+/// assert_eq!(0b1000_0000u8.get_bit( 7 ) , Some(true));
+/// assert_eq!(0b1111_1110u8.get_bit( 0 ) , Some(false));
+/// assert_eq!(0b0000_0000u8.get_bit( 8 ) , None);
 /// ```
 pub trait GetBit {
 	fn get_bit(&self, idx: usize) -> Option<bool>;
