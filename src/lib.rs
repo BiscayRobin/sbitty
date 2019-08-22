@@ -12,12 +12,9 @@ use core::mem::size_of;
 
 /// The IndexError enum is used for error handling
 /// This should not be seen as an API user
-pub enum IndexError {
-	/// Thrown when an you wan't to acces too far in memory
-	UNDERSIZED,
-}
+pub struct IndexError;
 
-/// performing _ & (1 << idx) with n the index
+/// performing _ & (1 << idx) with n the index and return the boolean corresponding
 ///
 /// # Examples
 ///
@@ -45,7 +42,7 @@ pub enum IndexError {
 /// 				Some(false)
 /// 			}
 /// 		} else {
-/// 			if self.lwb & (1 << (idx - 64)) != 0 {
+/// 			if self.lwb & (1 << idx) != 0 {
 /// 				Some(true)
 /// 			}
 /// 			else {
@@ -77,6 +74,41 @@ macro_rules! get_bit_impl {
 
 get_bit_impl! {u8 u16 u32 u64 usize i8 i16 i32 i64 isize}
 
+/// performing _ | (1 << idx) with n the index
+///
+/// # Examples
+///
+/// ## set bit for big int
+///
+/// Don't pay attention to my bigint implementation.
+///
+/// ```
+/// pub struct BigInt {
+/// 	hwb: i64,
+/// 	lwb: i64,
+/// }
+/// # pub struct IndexError;
+/// # pub trait SetBit {
+/// # 	fn set_bit(&self, idx: usize) -> Result<Self,IndexError> where Self: Sized;
+/// # }
+/// impl SetBit for BigInt {
+/// 	fn set_bit(&self, idx: usize) -> Result<Self,IndexError> where Self: Sized {
+/// 		if idx >= 128 {
+/// 			Err(IndexError)
+/// 		} else if idx >= 64 {
+/// 			Ok(BigInt{
+/// 				hwb: self.hwb | (1 << (idx - 64)),
+/// 				lwb: self.lwb
+/// 			})
+/// 		} else {
+/// 			Ok(BigInt{
+/// 				hwb: self.hwb,
+/// 				lwb: self.lwb | (1 << (idx - 64))
+/// 			})
+/// 		}
+/// 	}
+/// }
+/// ```
 pub trait SetBit {
 	fn set_bit(&self, idx: usize) -> Result<Self, IndexError>
 	where
@@ -88,7 +120,7 @@ macro_rules! set_bit_impl {
 		impl SetBit for $t {
 			fn set_bit(&self, idx: usize) -> Result<Self, IndexError> where Self: Sized {
 				if idx >= (size_of::<Self>() * 8) {
-					Err(IndexError::UNDERSIZED)
+					Err(IndexError)
 				} else {
 					Ok(*self | (1 << idx))
 				}
@@ -99,6 +131,41 @@ macro_rules! set_bit_impl {
 
 set_bit_impl! {u8 u16 u32 u64 usize i8 i16 i32 i64 isize}
 
+/// performing _ & !(1 << idx) with n the index
+///
+/// # Examples
+///
+/// ## unset bit for big int
+///
+/// Don't pay attention to my bigint implementation.
+///
+/// ```
+/// pub struct BigInt {
+/// 	hwb: i64,
+/// 	lwb: i64,
+/// }
+/// # pub struct IndexError;
+/// # pub trait UnsetBit {
+/// # 	fn unset_bit(&self, idx: usize) -> Result<Self,IndexError> where Self: Sized;
+/// # }
+/// impl UnsetBit for BigInt {
+/// 	fn unset_bit(&self, idx: usize) -> Result<Self,IndexError> where Self: Sized {
+/// 		if idx >= 128 {
+/// 			Err(IndexError)
+/// 		} else if idx >= 64 {
+/// 			Ok(BigInt{
+/// 				hwb: self.hwb & !(1 << (idx - 64)),
+/// 				lwb: self.lwb
+/// 			})
+/// 		} else {
+/// 			Ok(BigInt{
+/// 				hwb: self.hwb,
+/// 				lwb: self.lwb & !(1 << (idx - 64))
+/// 			})
+/// 		}
+/// 	}
+/// }
+/// ```
 pub trait UnsetBit {
 	fn unset_bit(&self, idx: usize) -> Result<Self, IndexError>
 	where
@@ -110,7 +177,7 @@ macro_rules! unset_bit_impl {
 		impl UnsetBit for $t {
 			fn unset_bit(&self, idx: usize) -> Result<Self, IndexError> where Self: Sized {
 				if idx >= (size_of::<Self>() * 8) {
-					Err(IndexError::UNDERSIZED)
+					Err(IndexError)
 				} else {
 					Ok(*self & !(1 << idx))
 				}
@@ -121,6 +188,41 @@ macro_rules! unset_bit_impl {
 
 unset_bit_impl! {u8 u16 u32 u64 usize i8 i16 i32 i64 isize}
 
+/// performing _ (1 << idx) with n the index
+///
+/// # Examples
+///
+/// ## unset bit for big int
+///
+/// Don't pay attention to my bigint implementation.
+///
+/// ```
+/// pub struct BigInt {
+/// 	hwb: i64,
+/// 	lwb: i64,
+/// }
+/// # pub struct IndexError;
+/// # pub trait ToggleBit {
+/// # 	fn toggle_bit(&self, idx: usize) -> Result<Self,IndexError> where Self: Sized;
+/// # }
+/// impl ToggleBit for BigInt {
+/// 	fn toggle_bit(&self, idx: usize) -> Result<Self,IndexError> where Self: Sized {
+/// 		if idx >= 128 {
+/// 			Err(IndexError)
+/// 		} else if idx >= 64 {
+/// 			Ok(BigInt{
+/// 				hwb: self.hwb ^ (1 << (idx - 64)),
+/// 				lwb: self.lwb
+/// 			})
+/// 		} else {
+/// 			Ok(BigInt{
+/// 				hwb: self.hwb,
+/// 				lwb: self.lwb ^ (1 << (idx - 64))
+/// 			})
+/// 		}
+/// 	}
+/// }
+/// ```
 pub trait ToggleBit {
 	fn toggle_bit(&self, idx: usize) -> Result<Self, IndexError>
 	where
@@ -132,7 +234,7 @@ macro_rules! toggle_bit_impl {
 		impl ToggleBit for $t {
 			fn toggle_bit(&self, idx: usize) -> Result<Self, IndexError> where Self: Sized {
 				if idx >= (size_of::<Self>() * 8) {
-					Err(IndexError::UNDERSIZED)
+					Err(IndexError)
 				} else {
 					Ok(*self ^ (1 << idx))
 				}
