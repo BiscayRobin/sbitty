@@ -1,6 +1,6 @@
 [package]
 name = "sbitty"
-version = "0.5.4"
+version = "0.5.5"
 authors = ["Robin Biscay <biscay.rob@gmail.com"]
 edition = "2018"
 description = "library defining bitwise operations on standard integers type"
