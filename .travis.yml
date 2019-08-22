@@ -13,9 +13,13 @@ jobs:
         - cargo check --verbose
         - cargo test --verbose
     - stages: package
-      script: cargo publish --dry-run
+      script: 
+        - cargo publish --dry-run
+        - rustdoc --test src/lib.rs
     - stages: publish
-      script: cargo publish --token $CARGO_TOKEN
+      script: 
+        - cargo doc
+        - cargo publish --token $CARGO_TOKEN
       if: commit_message =~ /^#release*/ 
 
 notifications:
