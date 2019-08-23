@@ -10,7 +10,7 @@
 #![no_std]
 use core::mem::size_of;
 
-/// The IndexError enum is used for error handling
+/// The IndexError struct is used for error handling
 /// This should not be seen as an API user
 pub struct IndexError;
 
@@ -188,7 +188,7 @@ macro_rules! unset_bit_impl {
 
 unset_bit_impl! {u8 u16 u32 u64 usize i8 i16 i32 i64 isize}
 
-/// performing _ (1 << idx) with n the index
+/// performing _ ^ (1 << idx) with n the index
 ///
 /// # Examples
 ///
