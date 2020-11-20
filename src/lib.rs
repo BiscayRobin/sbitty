@@ -4,7 +4,7 @@
 //!
 //! It is made so you only have to call functions to use it properly.
 //! This crate use indexes as you would in vectors or Arrays. If any
-//! index error happend in your program you will get `Option<T>` or
+//! index error happened in your program you will get `Option<T>` or
 //! `Result<_,_>` returned to properly handle this in a production ready
 //! manner.
 #![no_std]
@@ -252,126 +252,162 @@ mod test {
 	fn get_bit_u8() {
 		assert_eq!(0u8.get_bit(0), Some(false));
 		assert_eq!(1u8.get_bit(0), Some(true));
-		assert_eq!(0x04u8.get_bit(2), Some(true));
-		assert_eq!(0xFBu8.get_bit(2), Some(false));
+		assert_eq!(0x4u8.get_bit(2), Some(true));
+		assert_eq!((~0x4u8).get_bit(2), Some(false));
 		assert_eq!(0u8.get_bit(size_of::<u8>() * 8), None);
 	}
 	#[test]
 	fn get_bit_u16() {
 		assert_eq!(0u16.get_bit(0), Some(false));
 		assert_eq!(1u16.get_bit(0), Some(true));
-		assert_eq!(0x04u16.get_bit(2), Some(true));
-		assert_eq!(0xFBu16.get_bit(2), Some(false));
+		assert_eq!(0x4u16.get_bit(2), Some(true));
+		assert_eq!((~0x4u16).get_bit(2), Some(false));
 		assert_eq!(0u16.get_bit(size_of::<u16>() * 8), None);
 	}
 	#[test]
 	fn get_bit_u32() {
 		assert_eq!(0u32.get_bit(0), Some(false));
 		assert_eq!(1u32.get_bit(0), Some(true));
+		assert_eq!(0x4u32.get_bit(2), Some(true));
+		assert_eq!((~0x4u32).get_bit(2), Some(false));
 		assert_eq!(0u32.get_bit(size_of::<u32>() * 8), None);
 	}
 	#[test]
 	fn get_bit_u64() {
 		assert_eq!(0u64.get_bit(0), Some(false));
 		assert_eq!(1u64.get_bit(0), Some(true));
+		assert_eq!(0x4u64.get_bit(2), Some(true));
+        assert_eq!((~0x4u64).get_bit(2), Some(false));
 		assert_eq!(0u64.get_bit(size_of::<u64>() * 8), None);
 	}
 	#[test]
 	fn get_bit_usize() {
 		assert_eq!(0usize.get_bit(0), Some(false));
 		assert_eq!(1usize.get_bit(0), Some(true));
+		assert_eq!(0x4usize.get_bit(2), Some(true));
+		assert_eq!((~0x4usize).get_bit(2), Some(false));
 		assert_eq!(0usize.get_bit(size_of::<usize>() * 8), None);
 	}
 	#[test]
 	fn get_bit_i8() {
 		assert_eq!(0i8.get_bit(0), Some(false));
 		assert_eq!(1i8.get_bit(0), Some(true));
+		assert_eq!(0x4i8.get_bit(2), Some(true));
+		assert_eq!((~0x4i8).get_bit(2), Some(false));
 		assert_eq!(0i8.get_bit(size_of::<i8>() * 8), None);
 	}
 	#[test]
 	fn get_bit_i16() {
 		assert_eq!(0i16.get_bit(0), Some(false));
 		assert_eq!(1i16.get_bit(0), Some(true));
-		assert_eq!(0i16.get_bit(size_of::<i16>() * 8), None);
+		assert_eq!(0x4i16.get_bit(2), Some(true));
+		assert_eq!((~0x4i16).get_bit(2), Some(false));
+        assert_eq!(0i16.get_bit(size_of::<i16>() * 8), None);
 	}
 	#[test]
 	fn get_bit_i32() {
 		assert_eq!(0i32.get_bit(0), Some(false));
 		assert_eq!(1i32.get_bit(0), Some(true));
-		assert_eq!(0i32.get_bit(size_of::<i32>() * 8), None);
+		assert_eq!(0x4i32.get_bit(2), Some(true));
+		assert_eq!((~0x4i32).get_bit(2), Some(false));
+        assert_eq!(0i32.get_bit(size_of::<i32>() * 8), None);
 	}
 	#[test]
 	fn get_bit_i64() {
 		assert_eq!(0i64.get_bit(0), Some(false));
 		assert_eq!(1i64.get_bit(0), Some(true));
-		assert_eq!(0i64.get_bit(size_of::<i64>() * 8), None);
+		assert_eq!(0x4i64.get_bit(2), Some(true));
+		assert_eq!((~0x4i64).get_bit(2), Some(false));
+        assert_eq!(0i64.get_bit(size_of::<i64>() * 8), None);
 	}
 	#[test]
 	fn get_bit_isize() {
 		assert_eq!(0isize.get_bit(0), Some(false));
 		assert_eq!(1isize.get_bit(0), Some(true));
-		assert_eq!(0isize.get_bit(size_of::<isize>() * 8), None);
+		assert_eq!(0x4isize.get_bit(2), Some(true));
+		assert_eq!((~0x4isize).get_bit(2), Some(false));
+        assert_eq!(0isize.get_bit(size_of::<isize>() * 8), None);
 	}
 
 	#[test]
 	fn set_bit_u8() {
 		assert_eq!(1u8.set_bit(0).ok(), Some(1));
 		assert_eq!(0u8.set_bit(0).ok(), Some(1));
-		assert!(0u8.set_bit(size_of::<u8>() * 8).is_err());
+		assert_eq!(0x4u8.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4u8).set_bit(2).ok(), Some(~0u8));
+        assert!(0u8.set_bit(size_of::<u8>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_u16() {
 		assert_eq!(1u16.set_bit(0).ok(), Some(1));
 		assert_eq!(0u16.set_bit(0).ok(), Some(1));
-		assert!(0u16.set_bit(size_of::<u16>() * 8).is_err());
+		assert_eq!(0x4u16.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4u16).set_bit(2).ok(), Some(~0u16));
+        assert!(0u16.set_bit(size_of::<u16>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_u32() {
 		assert_eq!(1u32.set_bit(0).ok(), Some(1));
 		assert_eq!(0u32.set_bit(0).ok(), Some(1));
-		assert!(0u32.set_bit(size_of::<u32>() * 8).is_err());
+		assert_eq!(0x4u32.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4u32).set_bit(2).ok(), Some(~0u32));
+        assert!(0u32.set_bit(size_of::<u32>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_u64() {
 		assert_eq!(1u64.set_bit(0).ok(), Some(1));
 		assert_eq!(0u64.set_bit(0).ok(), Some(1));
-		assert!(0u64.set_bit(size_of::<u64>() * 8).is_err());
+		assert_eq!(0x4u64.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4u64).set_bit(2).ok(), Some(~0u64));
+        assert!(0u64.set_bit(size_of::<u64>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_usize() {
 		assert_eq!(1usize.set_bit(0).ok(), Some(1));
-		assert_eq!(0usize.set_bit(0).ok(), Some(1));
-		assert!(0usize.set_bit(size_of::<usize>() * 8).is_err());
+		assert_eq!(0usize.set_bit(0).ok(), Some(1));	
+        assert_eq!(0x4usize.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4usize).set_bit(2).ok(), Some(~0usize));
+        assert!(0usize.set_bit(size_of::<usize>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_i8() {
 		assert_eq!(1i8.set_bit(0).ok(), Some(1));
 		assert_eq!(0i8.set_bit(0).ok(), Some(1));
-		assert!(0i8.set_bit(size_of::<i8>() * 8).is_err());
+		assert_eq!(0x4i8.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4i8).set_bit(2).ok(), Some(~0i8));
+        assert!(0i8.set_bit(size_of::<i8>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_i16() {
 		assert_eq!(1i16.set_bit(0).ok(), Some(1));
 		assert_eq!(0i16.set_bit(0).ok(), Some(1));
-		assert!(0i16.set_bit(size_of::<i16>() * 8).is_err());
+		assert_eq!(0x4i16.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4i16).set_bit(2).ok(), Some(~0i16));
+        assert!(0i16.set_bit(size_of::<i16>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_i32() {
 		assert_eq!(1i32.set_bit(0).ok(), Some(1));
 		assert_eq!(0i32.set_bit(0).ok(), Some(1));
-		assert!(0i32.set_bit(size_of::<i32>() * 8).is_err());
+		assert_eq!(0x4i32.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4i32).set_bit(2).ok(), Some(~0i32));
+        assert!(0i32.set_bit(size_of::<i32>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_i64() {
 		assert_eq!(1i64.set_bit(0).ok(), Some(1));
 		assert_eq!(0i64.set_bit(0).ok(), Some(1));
-		assert!(0i64.set_bit(size_of::<i64>() * 8).is_err());
+		assert_eq!(0x4i64.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4i64).set_bit(2).ok(), Some(~0i64));
+        assert!(0i64.set_bit(size_of::<i64>() * 8).is_err());
 	}
 	#[test]
 	fn set_bit_isize() {
 		assert_eq!(1isize.set_bit(0).ok(), Some(1));
 		assert_eq!(0isize.set_bit(0).ok(), Some(1));
-		assert!(0isize.set_bit(size_of::<isize>() * 8).is_err());
+		assert_eq!(0x4isize.set_bit(2).ok(), Some(0x4));
+        assert_eq!((~0x4isize).set_bit(2).ok(), Some(~0isize));
+        assert!(0isize.set_bit(size_of::<isize>() * 8).is_err());
 	}
 	#[test]
 	fn unset_bit_u8() {
