@@ -252,12 +252,16 @@ mod test {
 	fn get_bit_u8() {
 		assert_eq!(0u8.get_bit(0), Some(false));
 		assert_eq!(1u8.get_bit(0), Some(true));
+		assert_eq!(0x04u8.get_bit(2), Some(true));
+		assert_eq!(0xFBu8.get_bit(2), Some(false));
 		assert_eq!(0u8.get_bit(size_of::<u8>() * 8), None);
 	}
 	#[test]
 	fn get_bit_u16() {
 		assert_eq!(0u16.get_bit(0), Some(false));
 		assert_eq!(1u16.get_bit(0), Some(true));
+		assert_eq!(0x04u16.get_bit(2), Some(true));
+		assert_eq!(0xFBu16.get_bit(2), Some(false));
 		assert_eq!(0u16.get_bit(size_of::<u16>() * 8), None);
 	}
 	#[test]
