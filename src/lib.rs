@@ -252,6 +252,8 @@ mod test {
 	fn get_bit_u8() {
 		assert_eq!(0u8.get_bit(0), Some(false));
 		assert_eq!(1u8.get_bit(0), Some(true));
+		assert_eq!(0x04.get_bit(2), Some(true));
+		assert_eq!(0xFB.get_bit(2), Some(false));
 		assert_eq!(0u8.get_bit(size_of::<u8>() * 8), None);
 	}
 	#[test]
