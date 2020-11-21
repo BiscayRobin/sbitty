@@ -19,7 +19,8 @@ jobs:
     - stages: publish
       script: 
         - cargo doc
-        - cargo publish --token $CARGO_TOKEN
+        - cargo login $CARGO_TOKEN
+        - cargo publish
       if: commit_message =~ /^#release*/ 
 
 notifications:
